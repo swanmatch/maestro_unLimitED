@@ -1,0 +1,16 @@
+<%- only_show ||= false -%>
+<%= simple_form_for(@song) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+    <%= f.input :title, disabled: only_show %>
+    <%= f.input :url, disabled: only_show %>
+    <%= f.hidden_field :lock_version %>
+  </div>
+
+  <%- unless only_show -%>
+  <div class="form-actions">
+    <%= f.button :submit, class: "btn btn-primary" %>
+  </div>
+  <%- end -%>
+<% end %>

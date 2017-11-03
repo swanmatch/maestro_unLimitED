@@ -1,0 +1,9 @@
+<h1>Show Song</h1>
+<p id="notice"><%= notice %></p>
+
+<%= render "form", only_show: true %>
+
+<div class="text-center">
+  <%= link_to 'Back', songs_path, class: 'btn btn-default' %> |
+  <%= link_to 'Edit', edit_song_path(@song), class: 'btn btn-primary' %>
+</div>

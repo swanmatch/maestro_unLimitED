@@ -1,0 +1,17 @@
+<%%- only_show ||= false -%>
+<%%= simple_form_for(@<%= singular_table_name %>) do |f| %>
+  <%%= f.error_notification %>
+
+  <div class="form-inputs">
+  <%- attributes.each do |attribute| -%>
+    <%%= f.<%= attribute.reference? ? :association : :input %> :<%= attribute.name %>, disabled: only_show %>
+  <%- end -%>
+    <%%= f.hidden_field :lock_version %>
+  </div>
+
+  <%%- unless only_show -%>
+  <div class="form-actions">
+    <%%= f.button :submit, class: "btn btn-primary" %>
+  </div>
+  <%%- end -%>
+<%% end %>
