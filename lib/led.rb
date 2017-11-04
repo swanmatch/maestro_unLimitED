@@ -60,7 +60,7 @@ module LED
             color = COLORS[message.note % 12]
             # 強い音は明るい光
             brightness = message.velocity / 100.0
-            brightness = if 1.0 < brightness then brightness = 1.0 end
+            brightness = 1.0 if 1.0 < brightness
             color = color.map {|rgb| (rgb * brightness).to_i }
             if (HAT[0].r + HAT[0].g + HAT[0].b) <= color.sum
               Thread.list.find_all{|th|
