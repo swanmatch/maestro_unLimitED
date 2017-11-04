@@ -101,7 +101,7 @@ module LED
           rgb
         end
         sleep time
-        gradetion(color, time)
+        LED.gradetion(color, time)
       end
     end
 end
