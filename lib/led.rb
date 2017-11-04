@@ -58,9 +58,10 @@ module LED
             #puts "VL: " + message.velocity.to_s
             color = COLORS[message.note % 12]
             brightness = 127.0 / message.velocity
+            puts brightness
             color.map! {|rgb| (rgb * brightness).to_i }
             Thread.new do
-              LED.gradetion(color)
+#              LED.gradetion(color)
             end
           end
         end
