@@ -79,7 +79,7 @@ module LED
     HAT.show
   end
 
-  private
+  #private
 
     def self.gradetion(color, time = 0.05)
       color.map! do |rgb|
