@@ -90,7 +90,7 @@ module LED
           end
           rgb
         end
-      if (HAT[0].r + HAT[0].g + HAT[0].b) < color.sum
+      if (HAT[0].r + HAT[0].g + HAT[0].b) <= color.sum
         puts color.inspect
         HAT[0..11] = Ws2812::Color.new(*color)
         HAT[31..54] = Ws2812::Color.new(*color)
