@@ -96,7 +96,7 @@ module LED
       if color.sum != 0
         color.map! do |rgb|
           if rgb <= 0
-            rgb = (rgb * 0.9).to_i - 1
+            rgb -= 10
           end
           rgb
         end
