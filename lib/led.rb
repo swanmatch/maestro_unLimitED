@@ -59,16 +59,9 @@ module LED
             color = COLORS[message.note % 12]
             brightness = 127.0 / message.velocity
             color.map! {|rgb| (rgb * brightness).to_i }
-            LED.gradetion(color)
-#            Thread.new do
-#              HAT[0..11] = Ws2812::Color.new(*color)
-#              HAT[31..54] = Ws2812::Color.new(*color)
-#              HAT.show
-#              sleep 0.2
-#              HAT[0..11] = BLACK
-#              HAT[31..54] = BLACK
-#              HAT.show
-#            end
+            Thread.new do
+              LED.gradetion(color)
+            end
           end
         end
         join
@@ -89,12 +82,15 @@ module LED
   private
 
     def self.gradetion(color, time = 0.05)
-      Thread.new do
-        HAT[0..11] = Ws2812::Color.new(*color)
-        HAT[31..54] = Ws2812::Color.new(*color)
-        HAT.show
-        color.map! do |color|
-          (color * 0.9).to_i
+      HAT[0..11] = Ws2812::Color.new(*color)
+      HAT[31..54] = Ws2812::Color.new(*color)
+      HAT.show
+      if color.sum != 0
+        color.map! do |rgb|
+          if rgb != 0
+            rgb = (rgb * 0.9).to_i - 1
+          end
+          rgb
         end
         sleep time
         gradetion(color, time)
