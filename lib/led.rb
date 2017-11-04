@@ -88,7 +88,7 @@ module LED
         end
         rgb
       end
-      puts color
+      puts color.inspect
       HAT[0..11] = Ws2812::Color.new(*color)
       HAT[31..54] = Ws2812::Color.new(*color)
       HAT.show
