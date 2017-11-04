@@ -61,7 +61,7 @@ module LED
             puts brightness
             color.map! {|rgb| (rgb * brightness).to_i }
             Thread.new do
-#              LED.gradetion(color)
+              LED.gradetion(color)
             end
           end
         end
