@@ -57,7 +57,7 @@ module LED
             #puts "NN: " + message.note.to_s
             #puts "VL: " + message.velocity.to_s
             color = COLORS[message.note % 12]
-            brightness = 127.0 / message.velocity
+            brightness = message.velocity / 127.0
             puts brightness
             color.map! {|rgb| (rgb * brightness).to_i }
             Thread.new do
