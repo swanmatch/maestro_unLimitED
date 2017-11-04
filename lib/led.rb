@@ -82,12 +82,18 @@ module LED
   private
 
     def self.gradetion(color, time = 0.05)
+      color.map! do |rgb|
+        if rgb <= 0
+          rgb = 0
+        end
+        rgb
+      end
       HAT[0..11] = Ws2812::Color.new(*color)
       HAT[31..54] = Ws2812::Color.new(*color)
       HAT.show
       if color.sum != 0
         color.map! do |rgb|
-          if rgb != 0
+          if rgb <= 0
             rgb = (rgb * 0.9).to_i - 1
           end
           rgb
