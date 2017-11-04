@@ -1,18 +1,32 @@
 module LED
 
+#  COLORS = [
+#    Ws2812::Color.new(255,   0,   0),
+#    Ws2812::Color.new(255, 127,   0),
+#    Ws2812::Color.new(255, 255,   0),
+#    Ws2812::Color.new(127, 255,   0),
+#    Ws2812::Color.new(  0, 255,   0),
+#    Ws2812::Color.new(  0, 255, 127),
+#    Ws2812::Color.new(  0, 255, 255),
+#    Ws2812::Color.new(  0, 127, 255),
+#    Ws2812::Color.new(  0,   0, 255),
+#    Ws2812::Color.new(127,   0, 255),
+#    Ws2812::Color.new(255,   0, 255),
+#    Ws2812::Color.new(255,   0, 127)
+#  ]
   COLORS = [
-    Ws2812::Color.new(255, 0, 0),
-    Ws2812::Color.new(255, 127, 0),
-    Ws2812::Color.new(255, 255, 0),
-    Ws2812::Color.new(127, 255, 0),
-    Ws2812::Color.new(0, 255, 0),
-    Ws2812::Color.new(0, 255, 127),
-    Ws2812::Color.new(0, 255, 255),
-    Ws2812::Color.new(0, 127, 255),
-    Ws2812::Color.new(0, 0, 255),
-    Ws2812::Color.new(127, 0, 255),
-    Ws2812::Color.new(255, 0, 255),
-    Ws2812::Color.new(255, 0, 127)
+    [255,   0,   0],
+    [255, 127,   0],
+    [255, 255,   0],
+    [127, 255,   0],
+    [  0, 255,   0],
+    [  0, 255, 127],
+    [  0, 255, 255],
+    [  0, 127, 255],
+    [  0,   0, 255],
+    [127,   0, 255],
+    [255,   0, 255],
+    [255,   0, 127]
   ]
   BLACK = Ws2812::Color.new(0,0,0)
   WHITE = Ws2812::Color.new(255,255,255)
@@ -44,8 +58,8 @@ module LED
             #puts "VL: " + message.velocity.to_s
             color = COLORS[message.note % 12]
             Thread.new do
-              HAT[0..11] = color
-              HAT[31..54] = color
+              HAT[0..11] = Ws2812::Color.new(*color)
+              HAT[31..54] = Ws2812::Color.new(*color)
               HAT.show
               sleep 0.2
               HAT[0..11] = BLACK

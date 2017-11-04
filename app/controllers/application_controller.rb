@@ -6,7 +6,7 @@ class ApplicationController < ActionController::Base
   def unicorn_play?
     @unicorn_playing =
       Thread.list.find_all{|th|
-        th[:name] == 'unicorn_hat'
+        th[:name] == 'MIDIListener'
       }.present?
   end
 
