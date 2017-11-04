@@ -95,10 +95,7 @@ module LED
       HAT.show
       if color.sum != 0
         color.map! do |rgb|
-          if rgb <= 0
-            rgb -= 10
-          end
-          rgb
+          rgb -= 10
         end
         sleep time
         LED.gradetion(color, time)
