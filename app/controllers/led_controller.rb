@@ -27,6 +27,6 @@ class LedController < ApplicationController
     Thread.new do
       LED.flash
     end
-    render nothing: true
+    head :ok
   end
 end
