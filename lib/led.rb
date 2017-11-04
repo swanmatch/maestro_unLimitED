@@ -59,7 +59,7 @@ module LED
             color = COLORS[message.note % 12]
             brightness = 127.0 / message.velocity
             color.map! {|rgb| (rgb * brightness).to_i }
-            gradetion(color)
+            LED.gradetion(color)
 #            Thread.new do
 #              HAT[0..11] = Ws2812::Color.new(*color)
 #              HAT[31..54] = Ws2812::Color.new(*color)
