@@ -51,21 +51,24 @@ module LED
     begin
       MIDI.using(input) do
         receive :note do |message|
-          if 18 < message.velocity
+          if 24 < message.velocity
 #            puts message.note
             puts "ch: " + message.channel.to_s
             #puts "NN: " + message.note.to_s
             #puts "VL: " + message.velocity.to_s
             color = COLORS[message.note % 12]
-            Thread.new do
-              HAT[0..11] = Ws2812::Color.new(*color)
-              HAT[31..54] = Ws2812::Color.new(*color)
-              HAT.show
-              sleep 0.2
-              HAT[0..11] = BLACK
-              HAT[31..54] = BLACK
-              HAT.show
-            end
+            brightness = 127.0 / message.velocity
+            color.map! {|rgb| (rgb * brightness).to_i }
+            gradetion(color)
+#            Thread.new do
+#              HAT[0..11] = Ws2812::Color.new(*color)
+#              HAT[31..54] = Ws2812::Color.new(*color)
+#              HAT.show
+#              sleep 0.2
+#              HAT[0..11] = BLACK
+#              HAT[31..54] = BLACK
+#              HAT.show
+#            end
           end
         end
         join
@@ -82,4 +85,19 @@ module LED
     HAT[12..30] = BLACK
     HAT.show
   end
+
+  private
+
+    def gradetion(color, time = 0.05)
+      Thread.new do
+        HAT[0..11] = Ws2812::Color.new(*color)
+        HAT[31..54] = Ws2812::Color.new(*color)
+        HAT.show
+        color.map! do |rgb|
+          (color * 0.9).to_i
+        end
+        sleep time
+        gradetion(color, time)
+      end
+    end
 end
