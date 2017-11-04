@@ -46,6 +46,7 @@ module LED
   HAT = Ws2812::Basic.new(55, 18).open
 
   def self.play2
+    puts 'listen!'
     input = UniMIDI::Input.first
 
     begin
@@ -58,8 +59,7 @@ module LED
             #puts "VL: " + message.velocity.to_s
             color = COLORS[message.note % 12]
             brightness = message.velocity / 127.0
-            puts brightness
-            color.map! {|rgb| (rgb * brightness).to_i }
+            color = color.map {|rgb| (rgb * brightness).to_i }
             Thread.new do
               LED.gradetion(color)
             end
@@ -83,22 +83,24 @@ module LED
   #private
 
     def self.gradetion(color, time = 0.05)
-      color.map! do |rgb|
-        if rgb <= 0
-          rgb = 0
+      color =
+        color.map do |rgb|
+          if rgb <= 0
+            rgb = 0
+          end
+          rgb
         end
-        rgb
-      end
       puts color.inspect
       HAT[0..11] = Ws2812::Color.new(*color)
       HAT[31..54] = Ws2812::Color.new(*color)
       HAT.show
       if color.sum != 0
-        color.map! do |rgb|
-          rgb = rgb - 5
-        end
+        new_color =
+          color.map do |rgb|
+            rgb = rgb - 5
+          end
         sleep time
-        LED.gradetion(color, time)
+        LED.gradetion(new_color, time)
       end
     end
 end
