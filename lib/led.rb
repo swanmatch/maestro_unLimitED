@@ -62,7 +62,7 @@ module LED
             brightness = message.velocity / 100.0
             brightness = 1.0 if 1.0 < brightness
             color = color.map {|rgb| (rgb * brightness).to_i }
-            if [HAT[0].r + HAT[0].g + HAT[0].b].max * 1.5 <= color.max
+            if [HAT[0].r + HAT[0].g + HAT[0].b].max * 2 <= color.max
               Thread.list.find_all{|th|
                 th[:name] == 'LEDFlame'
               }.each{|th|
