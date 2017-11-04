@@ -27,5 +27,12 @@ module MaestroUnlimited
 
     # Don't generate system test files.
     config.generators.system_tests = nil
+    config.generators.template_engine = :erb
+    config.autoload_paths << Rails.root.join("lib")
+    config.generators do |g|
+      g.orm :active_record
+      g.assets false
+      g.helper false
+    end
   end
 end
