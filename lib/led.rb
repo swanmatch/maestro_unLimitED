@@ -53,7 +53,7 @@ module LED
         receive :note do |message|
           if 24 < message.velocity
 #            puts message.note
-            puts "ch: " + message.channel.to_s
+#            puts "ch: " + message.channel.to_s
             #puts "NN: " + message.note.to_s
             #puts "VL: " + message.velocity.to_s
             color = COLORS[message.note % 12]
@@ -88,7 +88,7 @@ module LED
 
   private
 
-    def gradetion(color, time = 0.05)
+    def self.gradetion(color, time = 0.05)
       Thread.new do
         HAT[0..11] = Ws2812::Color.new(*color)
         HAT[31..54] = Ws2812::Color.new(*color)
