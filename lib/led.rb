@@ -93,7 +93,7 @@ module LED
         HAT[0..11] = Ws2812::Color.new(*color)
         HAT[31..54] = Ws2812::Color.new(*color)
         HAT.show
-        color.map! do |rgb|
+        color.map! do |color|
           (color * 0.9).to_i
         end
         sleep time
