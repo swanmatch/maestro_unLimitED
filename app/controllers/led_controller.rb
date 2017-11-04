@@ -1,6 +1,6 @@
 class LedController < ApplicationController
 
-  def unicorn_play
+  def play
     unicorn_stop_action
     unicorn_thread =
       Thread.new do
@@ -13,7 +13,7 @@ class LedController < ApplicationController
     redirect_to root_path
   end
 
-  def unicorn_stop
+  def stop
     Thread.list.find_all{|th|
       th[:name] == 'unicorn_hat'
     }.each{|th|
