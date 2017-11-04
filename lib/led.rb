@@ -90,17 +90,19 @@ module LED
           end
           rgb
         end
-      puts color.inspect
-      HAT[0..11] = Ws2812::Color.new(*color)
-      HAT[31..54] = Ws2812::Color.new(*color)
-      HAT.show
-      if color.sum != 0
-        new_color =
-          color.map do |rgb|
-            rgb = rgb - 5
-          end
-        sleep time
-        LED.gradetion(new_color, time)
+      if (HAT[0].r + HAT[0].g + HAT[0].b) < color.sum
+        puts color.inspect
+        HAT[0..11] = Ws2812::Color.new(*color)
+        HAT[31..54] = Ws2812::Color.new(*color)
+        HAT.show
+        if color.sum != 0
+          new_color =
+            color.map do |rgb|
+              rgb = rgb - 5
+            end
+          sleep time
+          LED.gradetion(new_color, time)
+        end
       end
     end
 end
