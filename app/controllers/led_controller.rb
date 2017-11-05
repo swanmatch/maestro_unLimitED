@@ -16,6 +16,7 @@ class LedController < ApplicationController
     redirect_to root_path
   end
 
+  # http://192.168.0.66:3000/led/flash?indexes=2,4&velocity=127&r=255&g=255&b=255
   def flash
     indexes =
       if params[:indexes]
@@ -30,7 +31,7 @@ class LedController < ApplicationController
       else
         LED::COLORS.sample
       end
-    time = params[:time].try(:to_i)
+    time = params[:time].try(:to_f)
     velocity = params[:velocity].try(:to_i) || 127
     color = LED.calc_brightness(color, velocity)
     if LED.get_brightness(indexes.first) <= color.max * 2
