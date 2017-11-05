@@ -25,6 +25,7 @@ class LedController < ApplicationController
     }.each{|th|
       th.kill
     }
+    puts color
 #    led_flame = Thread.new do
         LED.gradetion(indexes, color, time)
 #      end
