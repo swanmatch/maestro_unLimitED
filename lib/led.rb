@@ -71,6 +71,7 @@ module LED
 
   def self.gradetion(indexes, color = nil, time = 0.05)
     color ||= COLORS.sample
+    time  ||= 0.05
     puts color.inspect
     color.map! do |rgb|
       rgb = 0 if rgb < 0
