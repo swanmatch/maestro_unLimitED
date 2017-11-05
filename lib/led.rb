@@ -100,7 +100,7 @@ module LED
           rgb = 0 if rgb < 0
           rgb
         end
-#      puts color.inspect
+      puts color.inspect
       indexes.each do |i|
         HAT[i] = Ws2812::Color.new(*color)
       end
