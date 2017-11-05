@@ -1,19 +1,5 @@
 module LED
 
-#  COLORS = [
-#    Ws2812::Color.new(255,   0,   0),
-#    Ws2812::Color.new(255, 127,   0),
-#    Ws2812::Color.new(255, 255,   0),
-#    Ws2812::Color.new(127, 255,   0),
-#    Ws2812::Color.new(  0, 255,   0),
-#    Ws2812::Color.new(  0, 255, 127),
-#    Ws2812::Color.new(  0, 255, 255),
-#    Ws2812::Color.new(  0, 127, 255),
-#    Ws2812::Color.new(  0,   0, 255),
-#    Ws2812::Color.new(127,   0, 255),
-#    Ws2812::Color.new(255,   0, 255),
-#    Ws2812::Color.new(255,   0, 127)
-#  ]
   COLORS = [
     [255,   0,   0],
     [255, 127,   0],
@@ -83,33 +69,23 @@ module LED
     end
   end
 
-  def self.flash(color = nil)
-    HAT[12..30] = color || COLORS.sample
-    HAT.show
-    sleep 0.2
-    HAT[12..30] = BLACK
-    HAT.show
-  end
-
-  #private
-
-    def self.gradetion(indexes, color = nil, time = 0.05)
-      color ||= COLORS.sample
-      color.map! do |rgb|
-        rgb = 0 if rgb < 0
-        rgb
-      end
-#      puts color.inspect
-      indexes.each do |i|
-        HAT[i] = Ws2812::Color.new(*color)
-      end
-      HAT.show
-      if color.sum != 0
-        color.map! do |rgb|
-          rgb -= 5
-        end
-        sleep time
-        LED.gradetion(indexes, color, time)
-      end
+  def self.gradetion(indexes, color = nil, time = 0.05)
+    color ||= COLORS.sample
+    color.map! do |rgb|
+      rgb = 0 if rgb < 0
+      rgb
     end
+#      puts color.inspect
+    indexes.each do |i|
+      HAT[i] = Ws2812::Color.new(*color)
+    end
+    HAT.show
+    if color.sum != 0
+      color.map! do |rgb|
+        rgb -= 5
+      end
+      sleep time
+      LED.gradetion(indexes, color, time)
+    end
+  end
 end

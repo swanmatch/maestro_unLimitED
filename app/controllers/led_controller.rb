@@ -17,9 +17,18 @@ class LedController < ApplicationController
   end
 
   def flash
-    Thread.new do
-      LED.flash
-    end
+    indexes = params[:indexes].split(",") || (12..30)
+    color = params[:color],
+    time = params[:time]
+    Thread.list.find_all{ |th|
+      th[:name] == 'LEDInner'
+    }.each{|th|
+      th.kill
+    }
+    led_flame = Thread.new do
+        LED.gradetion(indexes, color, time)
+      end
+    led_flame[:name] = 'LEDInner'
     head :ok
   end
 
