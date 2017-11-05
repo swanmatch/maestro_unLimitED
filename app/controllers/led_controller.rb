@@ -28,7 +28,7 @@ class LedController < ApplicationController
     time = params[:time].try(:to_i)
     velocity = params[:velocity].try(:to_i) || 127
     color = LED.calc_brightness(color, velocity)
-    if [HAT[0].r + HAT[0].g + HAT[0].b].max <= color.max * 2
+    if LED.get_brightness(indexes.first) <= color.max * 2
       Thread.list.find_all{ |th|
         th[:name] == "LEDInner"
       }.each{|th|
