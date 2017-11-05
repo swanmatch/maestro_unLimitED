@@ -29,7 +29,7 @@ module LED
     [ 51, 52, 53, 54, 55,  0,  0,  0,  0, 56, 57,  0,  0],
   ]
 
-  $hat = Ws2812::Basic.new(55, 18).open
+  @@hat = Ws2812::Basic.new(55, 18).open
 
   def self.play2
     puts 'listen!'
@@ -76,7 +76,7 @@ module LED
     end
 #      puts color.inspect
     indexes.each do |i|
-      $hat[i] = Ws2812::Color.new(*color)
+      @@hat[i] = Ws2812::Color.new(*color)
     end
     $hat.show
     if color.sum != 0
@@ -95,6 +95,6 @@ module LED
   end
 
   def self.get_brightness(index)
-    [$hat[index].r, $hat[index].g, $hat[index].b].max
+    [@@hat[index].r, @@hat[index].g, @@hat[index].b].max
   end
 end
