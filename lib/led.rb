@@ -47,7 +47,7 @@ module LED
             color = COLORS[message.note % 12]
             # 強い音は明るい光
             color = LED.calc_brightness(color, message.velocity)
-            if LED.get_brightness(indexes.first) <= color.max * 2
+            if [HAT[0].r, HAT[0].g, HAT[0].b].max <= color.max * 2
               Thread.list.find_all{ |th|
                 th[:name] == 'LEDFlame'
               }.each{|th|
