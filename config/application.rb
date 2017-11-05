@@ -28,7 +28,8 @@ module MaestroUnlimited
     # Don't generate system test files.
     config.generators.system_tests = nil
     config.generators.template_engine = :erb
-    config.paths.add 'lib/*', eager_load: true
+#    config.paths.add 'lib', eager_load: true
+    config.paths.add 'lib'
     config.generators do |g|
       g.orm :active_record
       g.assets false
