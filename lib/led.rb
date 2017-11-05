@@ -46,16 +46,15 @@ module LED
 #            puts "VL: #{message.velocity}"
             color = COLORS[message.note % 12]
             # 強い音は明るい光
-            brightness = (message.velocity + 30) / 127.0
-            brightness = 1.0 if 1.0 < brightness
-            color = color.map {|rgb| (rgb * brightness).to_i }
+            color = LED.calc_brightness(color, message.velocity)
             if [HAT[0].r + HAT[0].g + HAT[0].b].max <= color.max * 2
               Thread.list.find_all{ |th|
                 th[:name] == 'LEDFlame'
               }.each{|th|
                 th.kill
               }
-              led_flame = Thread.new do
+              led_flame =
+                Thread.new do
                   LED.gradetion(indexes, color)
                 end
               led_flame[:name] = 'LEDFlame'
@@ -69,8 +68,7 @@ module LED
     end
   end
 
-  def self.gradetion(indexes, color = nil, time = 0.05)
-    color ||= COLORS.sample
+  def self.gradetion(indexes, color, time = 0.05)
     time  ||= 0.05
     puts color.inspect
     color.map! do |rgb|
@@ -89,5 +87,11 @@ module LED
       sleep time
       LED.gradetion(indexes, color, time)
     end
+  end
+
+  def self.calc_brightness(color, velocity)
+    brightness = (velocity + 30) / 127.0
+    brightness = 1.0 if 1.0 < brightness
+    color.map! {|rgb| (rgb * brightness).to_i }
   end
 end

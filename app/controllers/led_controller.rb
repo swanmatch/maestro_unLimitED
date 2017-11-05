@@ -18,18 +18,28 @@ class LedController < ApplicationController
 
   def flash
     indexes = params[:indexes].try(:split, ",") || (12..30)
-    color = params[:color]
-    time = params[:time]
-    Thread.list.find_all{ |th|
-      th[:name] == 'LEDInner'
-    }.each{|th|
-      th.kill
-    }
-    puts color.inspect
-#    led_flame = Thread.new do
-        LED.gradetion(indexes, color, time)
-#      end
-    led_flame[:name] = 'LEDInner'
+    rgb = [params[:r], params[:g], params[:b]]
+    color =
+      if (rgb.all?)
+        rgb.map(&:to_i)
+      else
+        LED::COLORS.sample
+      end
+    time = params[:time].try(:to_i)
+    velocity = params[:velocity]
+    color = LED.calc_brightness(color, velocity)
+    if [HAT[0].r + HAT[0].g + HAT[0].b].max <= color.max * 2
+      Thread.list.find_all{ |th|
+        th[:name] == "LEDInner"
+      }.each{|th|
+        th.kill
+      }
+      led_inner =
+        Thread.new do
+          LED.gradetion(indexes, color, time)
+        end
+      led_inner[:name] = "LEDInner"
+    end
     head :ok
   end
 
