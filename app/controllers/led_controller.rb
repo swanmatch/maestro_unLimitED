@@ -17,7 +17,12 @@ class LedController < ApplicationController
   end
 
   def flash
-    indexes = params[:indexes].try(:split, ",") || (12..30)
+    indexes =
+      if params[:indexes]
+        params[:indexes].split(",").map(&:to_i)
+      else
+        12..30
+      end
     rgb = [params[:r], params[:g], params[:b]]
     color =
       if (rgb.all?)
