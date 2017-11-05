@@ -48,28 +48,29 @@ module LED
   def self.play2
     puts 'listen!'
     input = UniMIDI::Input.first
+    indexes = [(0..11).to_a, (31..54).to_a].flatten
 
     begin
       MIDI.using(input) do
         receive :note do |message|
           if 24 < message.velocity
 #            puts message.note
-#            puts "ch: " + message.channel.to_s
-            #puts "NN: " + message.note.to_s
-            #puts "VL: " + message.velocity.to_s
+#            puts "ch: #{message.channel}"
+#            puts "NN: #{message.note}"
+#            puts "VL: #{message.velocity}"
             color = COLORS[message.note % 12]
             # 強い音は明るい光
-            brightness = message.velocity / 100.0
+            brightness = (message.velocity + 30) / 127.0
             brightness = 1.0 if 1.0 < brightness
             color = color.map {|rgb| (rgb * brightness).to_i }
             if [HAT[0].r + HAT[0].g + HAT[0].b].max <= color.max * 2
-              Thread.list.find_all{|th|
+              Thread.list.find_all{ |th|
                 th[:name] == 'LEDFlame'
               }.each{|th|
                 th.kill
-               }
+              }
               led_flame = Thread.new do
-                  LED.gradetion(color)
+                  LED.gradetion(indexes, color)
                 end
               led_flame[:name] = 'LEDFlame'
             end
@@ -92,25 +93,25 @@ module LED
 
   #private
 
-    def self.gradetion(color, time = 0.05)
-      color =
-        color.map do |rgb|
-          if rgb <= 0
-            rgb = 0
-          end
+    def self.gradetion(indexes, color = nil, time = 0.05)
+      color ||= COLORS.sample
+#      color =
+        color.map! do |rgb|
+          rgb = 0 if rgb < 0
           rgb
         end
-      puts color.inspect
-      HAT[0..11] = Ws2812::Color.new(*color)
-      HAT[31..54] = Ws2812::Color.new(*color)
+#      puts color.inspect
+      indexes.each do |i|
+        HAT[i] = Ws2812::Color.new(*color)
+      end
       HAT.show
       if color.sum != 0
-        new_color =
-          color.map do |rgb|
+#        new_color =
+          color.map! do |rgb|
             rgb = rgb - 5
           end
         sleep time
-        LED.gradetion(new_color, time)
+        LED.gradetion(color, time)
       end
     end
 end
