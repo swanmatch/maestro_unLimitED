@@ -95,23 +95,21 @@ module LED
 
     def self.gradetion(indexes, color = nil, time = 0.05)
       color ||= COLORS.sample
-      color =
-        color.map do |rgb|
-          rgb = 0 if rgb < 0
-          rgb
-        end
-      puts color.inspect
+      color.map! do |rgb|
+        rgb = 0 if rgb < 0
+        rgb
+      end
+#      puts color.inspect
       indexes.each do |i|
         HAT[i] = Ws2812::Color.new(*color)
       end
       HAT.show
       if color.sum != 0
-        new_color =
-          color.map do |rgb|
-            rgb -= 5
-          end
+        color.map! do |rgb|
+          rgb -= 5
+        end
         sleep time
-        LED.gradetion(new_color, time)
+        LED.gradetion(indexes, new_color, time)
       end
     end
 end
