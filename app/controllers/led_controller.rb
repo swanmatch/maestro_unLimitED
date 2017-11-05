@@ -25,9 +25,9 @@ class LedController < ApplicationController
     }.each{|th|
       th.kill
     }
-    led_flame = Thread.new do
+#    led_flame = Thread.new do
         LED.gradetion(indexes, color, time)
-      end
+#      end
     led_flame[:name] = 'LEDInner'
     head :ok
   end
