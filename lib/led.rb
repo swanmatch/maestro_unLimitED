@@ -70,10 +70,11 @@ module LED
 
   def self.gradetion(indexes, color, time = 0.05)
     time  ||= 0.05
-    color.map! do |rgb|
-      rgb = 0 if rgb < 0
-      rgb
-    end
+    color =
+      color.map do |rgb|
+        rgb = 0 if rgb < 0
+        rgb
+      end
     puts color.inspect
     indexes.each do |i|
       HAT[i] = Ws2812::Color.new(*color)
