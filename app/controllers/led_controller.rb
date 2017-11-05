@@ -18,7 +18,7 @@ class LedController < ApplicationController
 
   def flash
     indexes = params[:indexes].try(:split, ",") || (12..30)
-    color = params[:color],
+    color = params[:color]
     time = params[:time]
     Thread.list.find_all{ |th|
       th[:name] == 'LEDInner'
