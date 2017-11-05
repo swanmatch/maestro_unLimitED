@@ -78,7 +78,7 @@ module LED
     indexes.each do |i|
       @@hat[i] = Ws2812::Color.new(*color)
     end
-    $hat.show
+    @@hat.show
     if color.sum != 0
       color.map! do |rgb|
         rgb -= 5
