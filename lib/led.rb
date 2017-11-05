@@ -95,8 +95,8 @@ module LED
 
     def self.gradetion(indexes, color = nil, time = 0.05)
       color ||= COLORS.sample
-#      color =
-        color.map! do |rgb|
+      color =
+        color.map do |rgb|
           rgb = 0 if rgb < 0
           rgb
         end
@@ -108,7 +108,7 @@ module LED
       if color.sum != 0
         new_color =
           color.map do |rgb|
-            rgb = rgb - 5
+            rgb -= 5
           end
         sleep time
         LED.gradetion(new_color, time)
