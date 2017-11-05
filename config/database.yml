@@ -50,5 +50,3 @@ test:
 production:
   <<: *default
   database: maestro_unLimitED_production
-  username: maestro_unLimitED
-  password: <%= ENV['MAESTRO_UNLIMITED_DATABASE_PASSWORD'] %>
