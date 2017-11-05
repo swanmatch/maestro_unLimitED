@@ -93,7 +93,7 @@ module LED
   def self.calc_brightness(color, velocity)
     brightness = (velocity + 30) / 127.0
     brightness = 1.0 if 1.0 < brightness
-    color.map! {|rgb| (rgb * brightness).to_i }
+    color.map {|rgb| (rgb * brightness).to_i }
   end
 
   def self.get_brightness(index)
