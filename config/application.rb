@@ -28,7 +28,7 @@ module MaestroUnlimited
     # Don't generate system test files.
     config.generators.system_tests = nil
     config.generators.template_engine = :erb
-#    config.enable_dependency_loading = true
+    config.enable_dependency_loading = true
     config.autoload_paths << Rails.root.join("lib")
     config.generators do |g|
       g.orm :active_record
