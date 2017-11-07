@@ -44,7 +44,7 @@ module LED
 #            puts "ch: #{message.channel}"
 #            puts "NN: #{message.note}"
 #            puts "VL: #{message.velocity}"
-            color = COLORS[message.note % 12]
+            color = COLORS[message.note % 12].dup
             # 強い音は明るい光
             color = LED.calc_brightness(color, message.velocity)
             if [HAT[0].r, HAT[0].g, HAT[0].b].max <= color.max
@@ -70,23 +70,21 @@ module LED
 
   def self.gradetion(indexes, color, time = 0.05)
     time  ||= 0.05
-    color =
-      color.map do |rgb|
-        rgb = 0 if rgb < 0
-        rgb
-      end
+    color.map! do |rgb|
+      rgb = 0 if rgb < 0
+      rgb
+    end
 #    puts color.inspect
     indexes.each do |i|
       HAT[i] = Ws2812::Color.new(*color)
     end
     HAT.show
     if color.sum != 0
-      new_color=
-        color.map do |rgb|
-          rgb -= 5
-        end
+      color.map! do |rgb|
+        rgb -= 5
+      end
       sleep time
-      LED.gradetion(indexes, new_color, time)
+      LED.gradetion(indexes, color, time)
     end
   end
 
