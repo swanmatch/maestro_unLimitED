@@ -39,7 +39,7 @@ module LED
     begin
       MIDI.using(input) do
         receive :note do |message|
-          if 48 < message.velocity
+          if 38 < message.velocity
 #            puts message.note
 #            puts "ch: #{message.channel}"
 #            puts "NN: #{message.note}"
