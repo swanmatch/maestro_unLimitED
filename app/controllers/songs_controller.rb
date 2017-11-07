@@ -1,3 +1,4 @@
+require "socket"
 class SongsController < ApplicationController
   before_action :set_song, only: [:show, :edit, :update, :destroy]
 
@@ -8,6 +9,7 @@ class SongsController < ApplicationController
 
   # GET /songs/1
   def show
+    @ip = my_address
   end
 
   # GET /songs/new
@@ -54,5 +56,14 @@ class SongsController < ApplicationController
     # Only allow a trusted parameter "white list" through.
     def song_params
       params.require(:song).permit(:title, :url)
+    end
+
+    def my_address
+     udp = UDPSocket.new
+     # クラスBの先頭アドレス,echoポート 実際にはパケットは送信されない。
+     udp.connect("128.0.0.0", 7)
+     adrs = Socket.unpack_sockaddr_in(udp.getsockname)[1]
+     udp.close
+     adrs
     end
 end

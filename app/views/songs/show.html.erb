@@ -1,8 +1,36 @@
 <h1>Show Song</h1>
 <p id="notice"><%= notice %></p>
 
-<%= render "form", only_show: true %>
+<div class="well" id="well">
+  <div class="row">
+    <div class="col-md-6"><p class="lead">current chord</p><p class="text-center h1" id="current-chord"></p></div>
+    <div class="col-md-6"><p class="lead">next chord</p><p class="text-center h3" id="next-chord"></p></div>
+  </div>
 
+  <p class="text-center h1" id="current"></p>
+  <div data-api="songle-widget-api-example" data-url="<%= @song.url %>" id="songle-widget" data-songle-widget-size-w="auto" data-songle-widget-size-h="auto" data-video-player-size-w="auto" data-video-player-size-h="360"></div>
+  <script src="https://widget.songle.jp/v1/widgets.js"></script>
+  <script>
+window.onSongleWidgetReady =
+  function(apiKey, songleWidget)
+  {
+    songleWidget.on("chordPlay",
+      function(e)
+      {
+        $('#current-chord').text(e.chord.name);
+        $('#next-chord').text(e.chord.next.name);
+        /*
+
+          [...].chord.next.index
+          [...].chord.next.start
+          [...].chord.next.duration
+          [...].chord.next.name
+        */
+        $.get('http://<%= @ip %>:3000/led/flash');
+      });
+  }
+  </script>
+</div>
 <div class="text-center">
   <%= link_to 'Back', songs_path, class: 'btn btn-default' %> |
   <%= link_to 'Edit', edit_song_path(@song), class: 'btn btn-primary' %>
