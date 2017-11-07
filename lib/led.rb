@@ -39,7 +39,7 @@ module LED
     begin
       MIDI.using(input) do
         receive :note do |message|
-          if 24 < message.velocity
+          if 48 < message.velocity
 #            puts message.note
 #            puts "ch: #{message.channel}"
 #            puts "NN: #{message.note}"
@@ -47,7 +47,7 @@ module LED
             color = COLORS[message.note % 12]
             # 強い音は明るい光
             color = LED.calc_brightness(color, message.velocity)
-            if [HAT[0].r, HAT[0].g, HAT[0].b].max <= color.max * 2
+            if [HAT[0].r, HAT[0].g, HAT[0].b].max <= color.max
               Thread.list.find_all{ |th|
                 th[:name] == 'LEDFlame'
               }.each{|th|
