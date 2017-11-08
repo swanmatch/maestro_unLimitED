@@ -90,6 +90,7 @@ module LED
       colors.first.map.with_index do |rgb, i|
         rgb = rgb + diffs[i]
         rgb = 0 if rgb < 0
+        rgb = 255 if 255 < rgb
         rgb
       end
     puts new_color
