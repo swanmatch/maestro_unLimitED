@@ -33,10 +33,18 @@ class LedController < ApplicationController
       end
     time = params[:time].try(:to_f)
     velocity = params[:velocity].try(:to_i) || 127
+    thread_name =
+      if params[:tn]
+        params[:tn]
+      else
+        "LEDInner"
+      end
     color = LED.calc_brightness(color, velocity)
     if LED.get_brightness(indexes.first) <= color.max
       Thread.list.find_all{ |th|
-        th[:name] == "LEDInner#{indexes}"
+        thread_name.split(",").map { |tn|
+          th[:name].include? tn
+        }
       }.each{ |th|
         th.kill
       }
