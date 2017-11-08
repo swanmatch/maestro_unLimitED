@@ -90,7 +90,7 @@ module LED
     puts new_color.inspect
     next_diffs =
       diffs.map.with_index do |diff, i|
-        if new_color[i] < 0 || new_color < 255
+        if new_color[i] < 0 || new_color[i] < 255
           diff * -1
         else
           diff
