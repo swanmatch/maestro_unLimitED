@@ -79,7 +79,7 @@ module LED
     size = indexes.size
     colors ||= Array.new size, [255,255,255]
     time ||= 0.05
-    diffs ||= [-4, -8, -12]
+    diffs ||= [-2, -4, -6]
 
     indexes.each_with_index do |index, i|
       HAT[index] = Ws2812::Color.new(*colors[i])
