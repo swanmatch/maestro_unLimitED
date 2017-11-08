@@ -88,8 +88,11 @@ module LED
 
     new_color =
       colors.first.map.with_index do |rgb, i|
-        rgb + diffs[i]
+        rgb = rgb + diffs[i]
+        rgb = 0 if rgb < 0
+        rgb
       end
+    puts new_color
     next_diffs =
       diffs.map.with_index do |diff, i|
         if new_color[i] <= 0 || 255 <= new_color[i]
