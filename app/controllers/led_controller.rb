@@ -37,7 +37,7 @@ class LedController < ApplicationController
     if LED.get_brightness(indexes.first) <= color.max
       Thread.list.find_all{ |th|
         th[:name] == "LEDInner"
-      }.each{|th|
+      }.each{ |th|
         th.kill
       }
       led_inner =
@@ -51,7 +51,7 @@ class LedController < ApplicationController
 
   private
     def stop_action
-      Thread.list.find_all{|th|
+      Thread.list.find_all{ |th|
         th[:name] == 'MIDIListener'
       }.each{|th|
         th.kill

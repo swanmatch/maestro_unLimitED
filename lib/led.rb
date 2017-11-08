@@ -18,7 +18,7 @@ module LED
   HAT = Ws2812::Basic.new(55, 18).open
 
   def self.play2
-    puts 'listen!'
+    puts 'MIDI Lstening Now!'
     input = UniMIDI::Input.first
     indexes = [(0..11).to_a, (31..54).to_a].flatten
 
@@ -55,7 +55,7 @@ module LED
   end
 
   def self.gradetion(indexes, color, time = 0.05)
-    time  ||= 0.05
+    time ||= 0.05
     color.map! do |rgb|
       rgb = 0 if rgb < 0
       rgb
