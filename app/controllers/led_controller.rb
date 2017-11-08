@@ -44,7 +44,7 @@ class LedController < ApplicationController
       Thread.list.find_all{ |th|
         thread_name.split(",").map { |tn|
           th[:name].include? tn
-        }
+        }.any?
       }.each{ |th|
         th.kill
       }
@@ -52,7 +52,7 @@ class LedController < ApplicationController
         Thread.new do
           LED.gradetion(indexes, color, time)
         end
-      led_inner[:name] = "LEDInner#{indexes}"
+      led_inner[:name] = thread_name
     end
     head :ok
   end
