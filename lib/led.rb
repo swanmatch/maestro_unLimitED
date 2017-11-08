@@ -82,7 +82,7 @@ module LED
     diffs ||= [-8, -16, -32]
 
     indexes.each do |i|
-      HAT[i] = Ws2812::Color.new(*colors[i].color)
+      HAT[i] = Ws2812::Color.new(*colors[i])
     end
     HAT.show
 
