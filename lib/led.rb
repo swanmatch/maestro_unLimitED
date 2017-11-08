@@ -82,24 +82,24 @@ module LED
     diffs ||= [-8, -16, -32]
 
     indexes.each_with_index do |index, i|
-      puts colors[i].inspect
       HAT[index] = Ws2812::Color.new(*colors[i])
     end
     HAT.show
 
     new_color = colors.first.each_with_index{ |rgb, i| rgb + diffs[i] }
-    puts new_color
-    diffs.map!.with_index do |diff, i|
-      if new_color[i] < 0 || new_color < 255
-        diff * -1
-      else
-        diff
+    puts new_color.inspect
+    next_diffs =
+      diffs.map.with_index do |diff, i|
+        if new_color[i] < 0 || new_color < 255
+          diff * -1
+        else
+          diff
+        end
       end
-    end
     sleep time
     new_colors = [new_color, colors[1..(size-1)]].flatten(1)
     sleep time
-    LED.gradation(indexes, new_colors, time, diffs)
+    LED.gradation(indexes, new_colors, time, next_diffs)
   end
 
   def self.calc_brightness(color, velocity)
