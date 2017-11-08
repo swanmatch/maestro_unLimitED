@@ -38,6 +38,7 @@ class LedController < ApplicationController
       Thread.list.find_all{ |th|
         th[:name] == "LEDInner#{indexes.first}"
       }.each{ |th|
+        puts "kill LEDInner#{indexes.first}"
         th.kill
       }
       led_inner =
@@ -45,6 +46,7 @@ class LedController < ApplicationController
           LED.gradetion(indexes, color, time)
         end
       led_inner[:name] = "LEDInner#{indexes.first}"
+      puts "make thread LEDInner#{indexes.first}"
     end
     head :ok
   end
