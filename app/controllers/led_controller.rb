@@ -50,7 +50,7 @@ class LedController < ApplicationController
       }
       led_inner =
         Thread.new do
-          LED.gradetion(indexes, color, time)
+          LED.fade(indexes, color, time)
         end
       led_inner[:name] = thread_name
     end
