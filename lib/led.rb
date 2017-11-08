@@ -75,11 +75,11 @@ module LED
   end
 
   def self.gradation(indexes=nil, colors=nil, time=nil, diffs=nil)
-    indexes ||= [(0..11).to_a, (31..54).to_a].flatten
+    indexes ||= [(0..11).to_a, (31..54).to_a].flatten.find_all { |index| (index % 2) == 1 }
     size = indexes.size
     colors ||= Array.new size, [255,255,255]
     time ||= 0.05
-    diffs ||= [-1, -2, -4]
+    diffs ||= [-4, -8, -12]
 
     indexes.each_with_index do |index, i|
       HAT[index] = Ws2812::Color.new(*colors[i])
@@ -88,12 +88,12 @@ module LED
 
     new_color =
       colors.first.map.with_index do |rgb, i|
-        rgb = rgb + diffs[i]
+        rgb += diffs[i]
         rgb = 0 if rgb < 0
         rgb = 255 if 255 < rgb
         rgb
       end
-    puts new_color
+    puts new_color.inspect
     next_diffs =
       diffs.map.with_index do |diff, i|
         if new_color[i] <= 0 || 255 <= new_color[i]
