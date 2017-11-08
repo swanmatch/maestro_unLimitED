@@ -36,7 +36,7 @@ class LedController < ApplicationController
     color = LED.calc_brightness(color, velocity)
     if LED.get_brightness(indexes.first) <= color.max
       Thread.list.find_all{ |th|
-        th[:name] == "LEDInner"
+        th[:name] == "LEDInner#{indexes.first}"
       }.each{ |th|
         th.kill
       }
@@ -44,7 +44,7 @@ class LedController < ApplicationController
         Thread.new do
           LED.gradetion(indexes, color, time)
         end
-      led_inner[:name] = "LEDInner"
+      led_inner[:name] = "LEDInner#{indexes.first}"
     end
     head :ok
   end
