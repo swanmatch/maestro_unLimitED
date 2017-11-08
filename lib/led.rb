@@ -100,7 +100,7 @@ module LED
         end
       end
     sleep time
-    colors = colors[1..(size-1)].unshift(new_color)
+    colors.unshift(new_color)[1..size]
     puts colors.inspect
     LED.gradation(indexes, colors, time, next_diffs)
   end
