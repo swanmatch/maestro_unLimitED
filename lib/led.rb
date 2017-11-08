@@ -87,7 +87,7 @@ module LED
     end
     HAT.show
 
-    new_color = colors.first.each_with_index{|rgb| rgb + diffs[i]}
+    new_color = colors.first.each_with_index{ |rgb, i| rgb + diffs[i] }
     puts new_color
     diffs.map!.with_index do |diff, i|
       if new_color[i] < 0 || new_color < 255
