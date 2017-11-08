@@ -74,7 +74,7 @@ module LED
     end
   end
 
-  def self.gradation(indexes, colors, time, diffs)
+  def self.gradation(indexes=nil, colors=nil, time=nil, diffs=nil)
     indexes ||= [(0..11).to_a, (31..54).to_a].flatten
     size = indexes.size
     colors ||= Array.new size, [255,255,255]
