@@ -74,6 +74,33 @@ module LED
     end
   end
 
+  def self.gradation(indexes, colors, time, diffs)
+    indexes ||= [(0..11).to_a, (31..54).to_a].flatten
+    size = indexes.size
+    colors ||= Array.new size, [255,255,255]
+    time ||= 0.05
+    diffs ||= [-8, -16, -32]
+
+    indexes.each do |i|
+      HAT[i] = Ws2812::Color.new(*color)
+    end
+    HAT.show
+
+    new_color = colors.first + diffs
+    puts new_color
+    diffs.map!.with_index do |diff, i|
+      if new_color[i] < 0 || new_color < 255
+        diff * -1
+      else
+        diff
+      end
+    end
+    sleep time
+    new_colors = [new_color, colors[1..(size-1)]].flatten(1)
+    sleep time
+    LED.gradation(indexes, new_colors, time, diffs)
+  end
+
   def self.calc_brightness(color, velocity)
     brightness = (velocity + 30) / 127.0
     brightness = 1.0 if 1.0 < brightness
