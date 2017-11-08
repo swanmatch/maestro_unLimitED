@@ -17,7 +17,7 @@ module LED
 
   HAT = Ws2812::Basic.new(55, 18).open
 
-  def self.play2
+  def self.play
     puts 'MIDI Lstening Now!'
     input = UniMIDI::Input.first
     indexes = [(0..11).to_a, (31..54).to_a].flatten
@@ -41,7 +41,7 @@ module LED
               }
               led_flame =
                 Thread.new do
-                  LED.gradetion(indexes, color)
+                  LED.fade(indexes, color)
                 end
               led_flame[:name] = 'LEDFlame'
             end
@@ -54,7 +54,7 @@ module LED
     end
   end
 
-  def self.gradetion(indexes, color, time = 0.05)
+  def self.fade(indexes, color, time = 0.05)
     time ||= 0.05
     color.map! do |rgb|
       rgb = 0 if rgb < 0
@@ -70,7 +70,7 @@ module LED
         rgb -= 5
       end
       sleep time
-      LED.gradetion(indexes, color, time)
+      LED.fade(indexes, color, time)
     end
   end
 

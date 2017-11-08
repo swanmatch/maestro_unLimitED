@@ -4,10 +4,10 @@ class LedController < ApplicationController
     stop_action
     unicorn_thread =
       Thread.new do
-        LED.play2
+        LED.play
       end
     unicorn_thread[:name] = 'MIDIListener'
-    sleep 1
+    sleep 0.5
     redirect_to root_path
   end
 
