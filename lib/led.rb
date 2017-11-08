@@ -97,9 +97,9 @@ module LED
         end
       end
     sleep time
-    new_colors = [new_color, colors[1..(size-1)]].flatten(1)
+    colors[1..(size-1)].unshift(new_color)
     sleep time
-    LED.gradation(indexes, new_colors, time, next_diffs)
+    LED.gradation(indexes, colors, time, next_diffs)
   end
 
   def self.calc_brightness(color, velocity)
