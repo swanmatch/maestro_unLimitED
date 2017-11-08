@@ -79,7 +79,7 @@ module LED
     size = indexes.size
     colors ||= Array.new size, [255,255,255]
     time ||= 0.05
-    diffs ||= [-8, -16, -32]
+    diffs ||= [-1, -2, -4]
 
     indexes.each_with_index do |index, i|
       HAT[index] = Ws2812::Color.new(*colors[i])
@@ -90,7 +90,6 @@ module LED
       colors.first.map.with_index do |rgb, i|
         rgb + diffs[i]
       end
-    puts new_color.inspect
     next_diffs =
       diffs.map.with_index do |diff, i|
         if new_color[i] <= 0 || 255 <= new_color[i]
@@ -101,7 +100,6 @@ module LED
       end
     sleep time
     colors.unshift(new_color)[1..size]
-    puts colors.inspect
     LED.gradation(indexes, colors, time, next_diffs)
   end
 
