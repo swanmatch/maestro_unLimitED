@@ -43,10 +43,7 @@ class LedController < ApplicationController
     if LED.get_brightness(indexes.first) <= color.max
       Thread.list.find_all{ |th|
         thread_name.split(",").map { |tn|
-          puts th.inspect
-          puts th[:name].inspect
-          puts tn.inspect
-          th[:name] =~ tn
+          th[:name].try(:include?, tn)
         }.any?
       }.each{ |th|
         th.kill
