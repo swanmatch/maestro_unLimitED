@@ -22,16 +22,16 @@ module LED
     input = UniMIDI::Input.first
     indexes = [(0..11).to_a, (31..54).to_a].flatten.find_all { |index| (index % 2) == 0 }
 
-    Thread.list.find_all{ |th|
-      th[:name] == 'LEDGradation'
-    }.each{|th|
-      th.kill
-    }
-    led_flame =
-      Thread.new do
-        LED.gradation
-      end
-    led_flame[:name] = 'LEDGradation'
+#    Thread.list.find_all{ |th|
+#      th[:name] == 'LEDGradation'
+#    }.each{|th|
+#      th.kill
+#    }
+#    led_flame =
+#      Thread.new do
+#        LED.gradation
+#      end
+#    led_flame[:name] = 'LEDGradation'
 
     begin
       MIDI.using(input) do
@@ -87,10 +87,7 @@ module LED
   def self.gradation(indexes=nil, colors=nil, time=nil, diffs=nil)
     indexes ||= [(0..11).to_a, (31..54).to_a].flatten.find_all { |index| (index % 2) == 1 }
     size = indexes.size
-    if colors
-      colors = Array.new size, [0,0,0]
-      colors[0] = [255,255,255]
-    end
+    colors ||= Array.new size, [255,255,255]
     time ||= 0.05
     diffs ||= [-2, -4, -6]
 
