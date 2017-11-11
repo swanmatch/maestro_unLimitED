@@ -37,8 +37,7 @@ module LED
       MIDI.using(input) do
         receive :note do |message|
           if 38 < message.velocity
-#            puts message.note
-#            puts "ch: #{message.channel}"
+#            puts "CH: #{message.channel}"
 #            puts "NN: #{message.note}"
 #            puts "VL: #{message.velocity}"
             color = COLORS[message.note % 12].dup
@@ -88,7 +87,10 @@ module LED
   def self.gradation(indexes=nil, colors=nil, time=nil, diffs=nil)
     indexes ||= [(0..11).to_a, (31..54).to_a].flatten.find_all { |index| (index % 2) == 1 }
     size = indexes.size
-    colors ||= Array.new size, [255,255,255]
+    if colors
+      colors = Array.new size, [0,0,0]
+      colors[0] = [255,255,255]
+    end
     time ||= 0.05
     diffs ||= [-2, -4, -6]
 
