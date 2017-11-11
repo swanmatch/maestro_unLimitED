@@ -22,16 +22,16 @@ module LED
     input = UniMIDI::Input.first
     indexes = [(0..11).to_a, (31..54).to_a].flatten.find_all { |index| (index % 2) == 0 }
 
-#    Thread.list.find_all{ |th|
-#      th[:name] == 'LEDGradation'
-#    }.each{|th|
-#      th.kill
-#    }
-#    led_flame =
-#      Thread.new do
-#        LED.gradation
-#      end
-#    led_flame[:name] = 'LEDGradation'
+    Thread.list.find_all{ |th|
+      th[:name] == 'LEDGradation'
+    }.each{|th|
+      th.kill
+    }
+    led_flame =
+      Thread.new do
+        LED.gradation
+      end
+    led_flame[:name] = 'LEDGradation'
 
     begin
       MIDI.using(input) do
