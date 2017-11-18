@@ -25,8 +25,15 @@ window.onSongleWidgetReady =
           [...].chord.next.start
           [...].chord.next.duration
           [...].chord.next.name
+          $.get('http://<%= @ip %>:3000/led/flash');
         */
-        $.get('http://<%= @ip %>:3000/led/flash');
+      });
+    songleWidget.on("beatPlay",
+      function(e)
+      {
+        if (e.beat.position === 1) {
+          $.get('http://<%= @ip %>:3000/led/flash');
+        }
       });
   }
   </script>
