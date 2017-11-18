@@ -32,6 +32,7 @@ window.onSongleWidgetReady =
       function(e)
       {
         if (e.beat.position === 1) {
+          console.log(e.beat.position);
           $.get('http://<%= @ip %>:3000/led/flash');
         }
       });
