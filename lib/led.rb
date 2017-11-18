@@ -84,41 +84,41 @@ module LED
     end
   end
 
-  def self.gradation(indexes=nil, colors=nil, time=nil, diffs=nil)
-    indexes ||= [(0..11).to_a, (31..54).to_a].flatten.find_all { |index| (index % 2) == 1 }
+  def self.gradation
+    indexes = [(0..11).to_a, (31..54).to_a].flatten.find_all { |index| (index % 2) == 1 }
     size = indexes.size
-    unless colors
-      colors = Array.new size, [0,0,0]
-      colors[0] = [255,255,255]
-    end
-    time ||= 0.05
-    diffs ||= [-2, -4, -6]
+    colors = Array.new size, [0,0,0]
+    colors[0] = [255,255,255]
+    time = 0.005
+    diffs ||= [-2, -3, -5]
 
-    indexes.each_with_index do |index, i|
-      puts colors[i]
-      HAT[index] = Ws2812::Color.new(*colors[i])
-    end
-    HAT.show
-
-    new_color =
-      colors.first.map.with_index do |rgb, i|
-        rgb += diffs[i]
-        rgb = 0 if rgb < 0
-        rgb = 255 if 255 < rgb
-        rgb
+    loop do
+      indexes.each_with_index do |index, i|
+        puts colors[i]
+        HAT[index] = Ws2812::Color.new(*colors[i])
       end
-#    puts new_color.inspect
-    next_diffs =
-      diffs.map.with_index do |diff, i|
-        if new_color[i] <= 0 || 255 <= new_color[i]
-          diff * -1
-        else
-          diff
+      HAT.show
+
+      new_color =
+        colors.first.map.with_index do |rgb, i|
+          rgb += diffs[i]
+          rgb = 0 if rgb < 0
+          rgb = 255 if 255 < rgb
+          rgb
         end
-      end
-    sleep time
-    colors.unshift(new_color)[1..size]
-    LED.gradation(indexes, colors, time, next_diffs)
+  #    puts new_color.inspect
+      diffs =
+        diffs.map.with_index do |diff, i|
+          if new_color[i] <= 0 || 255 <= new_color[i]
+            diff * -1
+          else
+            diff
+          end
+        end
+      sleep time
+      colors.unshift(new_color)[1..size]
+    end
+#    LED.gradation(indexes, colors, time, next_diffs)
   end
 
   def self.calc_brightness(color, velocity)
