@@ -66,21 +66,24 @@ module LED
 
   def self.fade(indexes, color, time = 0.05)
     time ||= 0.05
-    color.map! do |rgb|
-      rgb = 0 if rgb < 0
-      rgb
-    end
-#    puts color.inspect
-    indexes.each do |i|
-      HAT[i] = Ws2812::Color.new(*color)
-    end
-    HAT.show
-    if color.sum != 0
+    loop do
       color.map! do |rgb|
-        rgb -= 5
+        rgb = 0 if rgb < 0
+        rgb
       end
-      sleep time
-      LED.fade(indexes, color, time)
+  #    puts color.inspect
+      indexes.each do |i|
+        HAT[i] = Ws2812::Color.new(*color)
+      end
+      HAT.show
+      if color.sum != 0
+        color.map! do |rgb|
+          rgb -= 5
+        end
+        sleep time
+      else
+        break
+      end
     end
   end
 
@@ -94,7 +97,7 @@ module LED
 
     loop do
       indexes.each_with_index do |index, i|
-        puts colors[i]
+#        puts colors[i].inspect
         HAT[index] = Ws2812::Color.new(*colors[i])
       end
       HAT.show
