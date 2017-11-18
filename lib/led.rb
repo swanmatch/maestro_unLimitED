@@ -92,7 +92,7 @@ module LED
     size = indexes.size
     colors = Array.new size, [0,0,0]
     colors[0] = [255,255,255]
-    time = 0.005
+    time = 0.05
     diffs ||= [-2, -3, -5]
 
     loop do
