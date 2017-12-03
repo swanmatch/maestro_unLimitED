@@ -1,11 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
+<<<<<<< HEAD
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/home/swanmatch/NetBeansProjects/maestro_unLimitED/app/controllers/led_controller.rb</file>
             <file>file:/home/swanmatch/NetBeansProjects/maestro_unLimitED/lib/led.rb</file>
             <file>file:/home/swanmatch/NetBeansProjects/maestro_unLimitED/config/application.rb</file>
             <file>file:/home/swanmatch/NetBeansProjects/maestro_unLimitED/app/controllers/application_controller.rb</file>
+=======
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+        <group>
+            <file>file:/home/swanmatch/NetBeansProjects/maestro_unLimitED/lib/led.rb</file>
+            <file>file:/home/swanmatch/NetBeansProjects/maestro_unLimitED/app/controllers/led_controller.rb</file>
+            <file>file:/home/swanmatch/NetBeansProjects/maestro_unLimitED/app/assets/javascripts/application.js</file>
+            <file>file:/home/swanmatch/NetBeansProjects/maestro_unLimitED/config/application.rb</file>
+            <file>file:/home/swanmatch/NetBeansProjects/maestro_unLimitED/app/views/songs/new.html.erb</file>
+            <file>file:/home/swanmatch/NetBeansProjects/maestro_unLimitED/app/views/songs/show.html.erb</file>
+            <file>file:/home/swanmatch/NetBeansProjects/maestro_unLimitED/Gemfile</file>
+            <file>file:/home/swanmatch/NetBeansProjects/maestro_unLimitED/http_requester.rb</file>
+            <file>file:/home/swanmatch/NetBeansProjects/maestro_unLimitED/app/controllers/songs_controller.rb</file>
+            <file>file:/home/swanmatch/NetBeansProjects/maestro_unLimitED/app/views/songs/edit.html.erb</file>
+>>>>>>> 809d621bbaff6a15556b67a7c4bbd3d356265f47
         </group>
     </open-files>
 </project-private>
