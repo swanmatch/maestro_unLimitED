@@ -11,6 +11,8 @@ require "action_view/railtie"
 # require "action_cable/engine"
 require "sprockets/railtie"
 # require "rails/test_unit/railtie"
+require File.expand_path("../../lib/log4r.rb", __FILE__)
+include Log4r
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
@@ -20,6 +22,11 @@ module MaestroUnlimited
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 5.1
+
+    config.colorize_logging = false
+    require File.dirname(__FILE__) + "/../lib/custom_logger"
+    config.logger = CustomLogger::SystemLogger.instance.logger
+    Log4r::Logger.send :include, ActiveRecord::SessionStore::Extension::LoggerSilencer
 
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers

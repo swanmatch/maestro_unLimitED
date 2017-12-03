@@ -62,9 +62,7 @@ group :development, :test do
   gem 'bullet'
 end
 
-#group :production do
-#  gem 'rails_12factor'
-#end
+gem 'log4r'
 
 # shirotori_add
 gem 'pry-rails'

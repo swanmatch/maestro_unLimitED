@@ -1,21 +1,5 @@
 class LedController < ApplicationController
 
-  def play
-    stop_action
-    unicorn_thread =
-      Thread.new do
-        LED.play
-      end
-    unicorn_thread[:name] = 'MIDIListener'
-    sleep 0.5
-    redirect_to root_path
-  end
-
-  def stop
-    stop_action
-    redirect_to root_path
-  end
-
   # http://192.168.0.66:3000/led/flash?indexes=2,4&velocity=127&r=255&g=255&b=255
   def flash
     indexes =
@@ -56,13 +40,4 @@ class LedController < ApplicationController
     end
     head :ok
   end
-
-  private
-    def stop_action
-      Thread.list.find_all{ |th|
-        th[:name] == 'MIDIListener'
-      }.each{|th|
-        th.kill
-       }
-    end
 end

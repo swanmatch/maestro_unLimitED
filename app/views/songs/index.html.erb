@@ -2,28 +2,30 @@
 
 <h1>Listing Songs</h1>
 
-<div class="table-responsive">
-  <table class="table table-striped table-bordered table-hover">
-    <thead>
-      <tr>
-        <th>Title</th>
-        <th>Url</th>
-        <th colspan="3"></th>
-      </tr>
-    </thead>
-
-    <tbody>
-      <% @songs.each do |song| %>
+<div class="well">
+  <div class="table-responsive">
+    <table class="table table-striped table-bordered table-hover">
+      <thead>
         <tr>
-          <td><%= song.title %></td>
-          <td><%= song.url %></td>
-          <td class="text-center"><%= link_to 'Show', song, class: 'btn btn-success' %></td>
-          <td class="text-center"><%= link_to 'Edit', edit_song_path(song), class: 'btn btn-primary' %></td>
-          <td class="text-center"><%= link_to 'Destroy', song, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger'  %></td>
+          <th>Title</th>
+          <th>Url</th>
+          <th colspan="3"></th>
         </tr>
-    <% end %>
-    </tbody>
-  </table>
+      </thead>
+
+      <tbody>
+        <% @songs.each do |song| %>
+          <tr>
+            <td><%= song.title %></td>
+            <td><%= song.url %></td>
+            <td class="text-center"><%= link_to 'Show', song, class: 'btn btn-success' %></td>
+            <td class="text-center"><%= link_to 'Edit', edit_song_path(song), class: 'btn btn-primary' %></td>
+            <td class="text-center"><%= link_to 'Destroy', song, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger'  %></td>
+          </tr>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
 </div>
 
 <br>
