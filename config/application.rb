@@ -26,7 +26,6 @@ module MaestroUnlimited
     config.colorize_logging = false
     require File.dirname(__FILE__) + "/../lib/custom_logger"
     config.logger = CustomLogger::SystemLogger.instance.logger
-    Log4r::Logger.send :include, ActiveRecord::SessionStore::Extension::LoggerSilencer
 
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
