@@ -28,16 +28,6 @@
       <ul class="nav navbar-nav hidden-xs">
         <li><%= link_to '唄', songs_path %></li>
       </ul>
-      <ul class="nav navbar-nav navbar-right">
-        <li><%=
-        if @unicorn_playing
-          link_to '発光停止', led_stop_path
-        else
-          link_to '発光開始', led_play_path
-        end
-        %>
-        </li>
-      </form>
     </div><!-- /.nav-collapse -->
   </div><!-- /.container -->
 </div><!-- /.navbar -->
