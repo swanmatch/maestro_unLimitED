@@ -91,7 +91,7 @@ module LED
   end
 
   def self.gradation
-    indexes = FLAME.flatten.find_all { |index| (index % 2) == 1 }
+    indexes = FLAME
     size = indexes.size
     colors = Array.new size, [0,0,0]
     colors[0] = [255,255,255]
