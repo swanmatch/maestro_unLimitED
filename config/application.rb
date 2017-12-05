@@ -26,6 +26,7 @@ module MaestroUnlimited
     config.colorize_logging = false
 #    require File.dirname(__FILE__) + "/../lib/custom_logger"
     config.logger = nil if Rails.env.production?
+    
 
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
