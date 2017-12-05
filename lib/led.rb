@@ -16,7 +16,7 @@ module LED
   ]
 
   HAT = Ws2812::Basic.new(86, 18).open
-  FLAME = [(0..8).to_a.reverse, (28..55).to_a].flatten
+  FLAME = [(28..55).to_a, (0..8).to_a.reverse].flatten.reverse
   INNER = (9..27).to_a
   BODY = (56..85).to_a
 
