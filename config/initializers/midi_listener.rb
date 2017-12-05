@@ -2,7 +2,7 @@
 # To change this template file, choose Tools | Templates
 # and open the template in the editor.
 if defined?(Rails::Server)
-  config.after_initialize do
+  Rails.application.config.after_initialize do
     unicorn_thread =
       Thread.new do
         LED.play
