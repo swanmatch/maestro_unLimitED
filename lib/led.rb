@@ -15,12 +15,15 @@ module LED
     [255,   0, 127]
   ]
 
-  HAT = Ws2812::Basic.new(55, 18).open
+  HAT = Ws2812::Basic.new(86, 18).open
+  FLAME = [(0..8).to_a.reverse, (28..55).to_a].flatten
+  INNER = (9..27).to_a
+  BODY = (56..85).to_a
 
   def self.play
     puts 'MIDI Lstening Now!'
     input = UniMIDI::Input.first
-    indexes = [(0..11).to_a, (31..54).to_a].flatten.find_all { |index| (index % 2) == 0 }
+    indexes = BODY
 
     Thread.list.find_all{ |th|
       th[:name] == 'LEDGradation'
@@ -88,7 +91,7 @@ module LED
   end
 
   def self.gradation
-    indexes = [(0..11).to_a, (31..54).to_a].flatten.find_all { |index| (index % 2) == 1 }
+    indexes = FLAME.flatten.find_all { |index| (index % 2) == 1 }
     size = indexes.size
     colors = Array.new size, [0,0,0]
     colors[0] = [255,255,255]

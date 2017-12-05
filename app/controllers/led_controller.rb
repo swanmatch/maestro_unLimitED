@@ -6,7 +6,7 @@ class LedController < ApplicationController
       if params[:indexes]
         params[:indexes].split(",").map(&:to_i)
       else
-        12..30
+        LED::INNER
       end
     rgb = [params[:r], params[:g], params[:b]]
     color =
