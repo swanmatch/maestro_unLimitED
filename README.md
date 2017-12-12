@@ -10,8 +10,8 @@ sudo su
 rails s -production
 ```
 
-Auto analysis beat and chords from youtube, niconico douga, and sound cloud music by songle.
-When music playing, display current chord and guitar lightning on the beat.
+Auto analysis beat and chords from youtube, niconico douga, and sound cloud music by songle.  
+When music playing, display current chord and flashing guitar on the beat.
 
 MIDI drum machine(and other) send LED control API,
 when hit crash, bass, and snare drum's note on event.
