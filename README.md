@@ -1,24 +1,13 @@
-# README
+# Lightning Guitar Project
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This is 86LEDs controlable Web Application.
 
-Things you may want to cover:
+Auto analysis beat and chords from youtube, niconico douga, and sound cloud music by songle.
+When music playing, display current chord and guitar lightning on the beat.
 
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+MIDI drum machine's note on event 
+requester connect MIDI device and type this on project folder.
+```sh
+ruby -s http_requester
+```
+// please install curl before.
