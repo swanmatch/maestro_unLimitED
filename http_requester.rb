@@ -18,9 +18,9 @@ begin
           end
         when 40
           # snare
-        #  Thread.new do
+          Thread.new do
             `curl -s http://#{ip}:3000/led/flash?velociity=#{message.velocity}\\&indexes=10,12,14,16,18,20,22,24,26\\&tn=snare`
-        #  end
+          end
         when 57, 49
           # clash
           Thread.new do
