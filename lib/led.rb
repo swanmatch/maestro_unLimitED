@@ -1,4 +1,18 @@
-module LED
+class Ws2812::Color
+  def initialize(r,g,b)
+    @r, @g, @b = [r, g, b].map do |color|
+      if color < 0
+        0
+      elsif 255 < color
+        255
+      else
+        color
+      end
+    end
+  end
+end
+
+  module LED
 
   COLORS = [
     [255,   0,   0],
@@ -26,6 +40,17 @@ module LED
     indexes = BODY
 
     Thread.list.find_all{ |th|
+      th[:name] == 'LEDFade'
+    }.each{|th|
+      th.kill
+    }
+    fade =
+      Thread.new do
+        LED.fade
+      end
+    fade[:name] = 'LEDFade'
+
+    Thread.list.find_all{ |th|
       th[:name] == 'LEDGradation'
     }.each{|th|
       th.kill
@@ -46,18 +71,7 @@ module LED
             color = COLORS[message.note % 12].dup
             # 強い音は明るい光
             color = LED.calc_brightness(color, message.velocity)
-            if [HAT[0].r, HAT[0].g, HAT[0].b].max <= color.max
-              Thread.list.find_all{ |th|
-                th[:name] == 'LEDFlame'
-              }.each{|th|
-                th.kill
-              }
-              led_flame =
-                Thread.new do
-                  LED.fade(indexes, color)
-                end
-              led_flame[:name] = 'LEDFlame'
-            end
+            LED.noteon(indexes, color)
           end
         end
         join
@@ -67,35 +81,32 @@ module LED
     end
   end
 
-  def self.fade(indexes, color, time = 0.05)
-    time ||= 0.05
+  def self.fade(time = 0.1)
+    time ||= 0.1
     loop do
-      color.map! do |rgb|
-        rgb = 0 if rgb < 0
-        rgb
-      end
-  #    puts color.inspect
-      indexes.each do |i|
-        HAT[i] = Ws2812::Color.new(*color)
+      86.times do |index|
+        HAT[index] = Ws2812::Color.new(HAT[index].r - 10, HAT[index].g - 10, HAT[index].b - 10)
       end
       HAT.show
-      if color.sum != 0
-        color.map! do |rgb|
-          rgb -= 5
-        end
-        sleep time
-      else
-        break
-      end
+      sleep time
     end
   end
 
+  def self.noteon(indexes, color)
+  #    puts color.inspect
+      indexes.each do |i|
+        #puts @@hat[i]
+        HAT[i] = Ws2812::Color.new(HAT[i].r + color[0], HAT[i].g + color[1], HAT[i].b + color[2])
+        #HAT[i] = Ws2812::Color.new(255,255,255)
+      end
+  end
+
   def self.gradation
-    indexes = FLAME.select{|i| i % 2 == 1}
+    indexes = FLAME#.select{|i| i % 2 == 1}
     size = indexes.size
     colors = Array.new size, [0,0,0]
     colors[0] = [255,255,255]
-    time = 0.05
+    time = 0.1
     diffs ||= [-2, -3, -5]
 
     loop do
@@ -103,7 +114,6 @@ module LED
 #        puts colors[i].inspect
         HAT[index] = Ws2812::Color.new(*colors[i])
       end
-      HAT.show
 
       new_color =
         colors.first.map.with_index do |rgb, i|
@@ -115,8 +125,10 @@ module LED
   #    puts new_color.inspect
       diffs =
         diffs.map.with_index do |diff, i|
-          if new_color[i] <= 0 || 255 <= new_color[i]
-            diff * -1
+          if new_color[i] <= 0
+            diff + 10
+          elsif 255 <= new_color[i]
+            diff - 10
           else
             diff
           end
@@ -128,7 +140,7 @@ module LED
   end
 
   def self.calc_brightness(color, velocity)
-    brightness = (velocity + 30) / 127.0
+    brightness = velocity / 127.0 * 0.75
     brightness = 1.0 if 1.0 < brightness
     color.map {|rgb| (rgb * brightness).to_i }
   end
