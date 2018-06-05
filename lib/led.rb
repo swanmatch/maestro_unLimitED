@@ -99,6 +99,7 @@ end
         HAT[i] = Ws2812::Color.new(HAT[i].r + color[0], HAT[i].g + color[1], HAT[i].b + color[2])
         #HAT[i] = Ws2812::Color.new(255,255,255)
       end
+      HAT.show
   end
 
   def self.gradation
